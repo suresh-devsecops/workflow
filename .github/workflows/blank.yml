@@ -1,0 +1,31 @@
+name: Run Shell in Alpine Container
+
+on:
+  workflow_dispatch:  # allows you to manually trigger the workflow from GitHub UI
+
+jobs:
+  run-in-docker:
+    runs-on: ubuntu-latest  # the runner host (still needed)
+    container:
+      image: alpine:latest  # the container (your "vessel")
+    steps:
+      - name: Show current working directory
+        run: pwd
+
+      - name: List files in directory
+        run: ls -al
+
+      - name: Show running processes
+        run: ps
+
+      - name: Show environment info
+        run: |
+          echo "Shell: $SHELL"
+          echo "OS Version:"
+          cat /etc/os-release
+
+      - name: Install curl and run a command
+        run: |
+          apk update
+          apk add curl
+          curl https://example.com
